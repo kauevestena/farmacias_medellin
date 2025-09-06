@@ -7,6 +7,8 @@ from folium.plugins import MarkerCluster
 # 2. Definir el área geográfica y las etiquetas de las características a descargar
 place = "Medellin, Colombia"
 tags = {"amenity": "pharmacy" , "shop":"chemist"} # llave=valor "llave":"valor"
+etiqueta_capa_cluster="Farmacias (Cluster)"
+etiqueta_capa_puntos="Farmacias (Points)"
 description = "Farmacias de Medellin"
 zoom_level = 13
 
@@ -39,7 +41,7 @@ folium.TileLayer(
 ).add_to(m)
 
 # 9. Añadir marcadores de paradas de autobús al mapa utilizando un plugin MarkerCluster
-marker_cluster = MarkerCluster(name="Bus Stops (Cluster)").add_to(m)
+marker_cluster = MarkerCluster(name=etiqueta_capa_cluster).add_to(m)
 for _, row in gdf.iterrows():
     coords = row.geometry
     if coords.geom_type == "Point":
@@ -51,7 +53,7 @@ for _, row in gdf.iterrows():
 # 10. Añadir una capa GeoJSON simple con marcadores circulares interactivos
 interactive_layer = folium.GeoJson(
     gdf,
-    name="Bus Stops (Points)", show=False,
+    name=etiqueta_capa_puntos, show=False,
     marker=folium.CircleMarker(
         radius=5, color="blue", fill=True, fill_opacity=0.7
     ),
